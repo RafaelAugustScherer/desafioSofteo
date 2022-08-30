@@ -4,7 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 
-const UserProvider = (props) => {
+const UserProvider = () => {
   const [cookies, setCookie] = useCookies(['caderneta-user']);
   const [user, setUser] = useState(cookies['caderneta-user']);
   const location = useLocation();

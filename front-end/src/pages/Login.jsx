@@ -12,8 +12,9 @@ const Login = () => {
     setFormData({ ...formData, [id]: value })
   );
 
-  const handleSubmit = () => login(formData.user, formData.password);
-
+  const handleSubmit = () => (
+    login(formData.user, formData.password)
+  );
 
   return (
     <form>

@@ -9,6 +9,7 @@ const App = () => {
 
   return (
     <UserProvider>
+      <Header />
       <div className="App">
         <Outlet />
       </div>
