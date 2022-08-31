@@ -13,7 +13,13 @@ const PaymentProvider = ({ children }) => {
   }
 
   const addPayment = (data) => {
-    const newPayment = { ...data, paid: 0, nextPayment: new Date() + 30 };
+    const nextPaymentDate = new Date();
+    nextPaymentDate.setDate(nextPaymentDate.getDate() + 30);
+    const newPayment = {
+      ...data,
+      paid: 0,
+      nextPaymentDate
+    };
     const updatedPayments = [...payments, newPayment];
 
     localStorage.setItem(

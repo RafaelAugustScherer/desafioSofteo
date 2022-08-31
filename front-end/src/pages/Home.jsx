@@ -1,4 +1,5 @@
 import PaymentForm from '../components/PaymentForm';
+import PaymentList from '../components/PaymentList';
 import PaymentProvider from '../provider/Payment';
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
     <div>
       <PaymentProvider>
         <PaymentForm />
+        <PaymentList />
       </PaymentProvider>
     </div>
   );
