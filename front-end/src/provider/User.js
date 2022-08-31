@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -21,13 +22,13 @@ const UserProvider = () => {
     }
   };
 
-  const login = (user, password) => {
+  const login = (user, _password) => {
     setUser(user);
     setCookie('caderneta-user', user, { maxAge: 86400 });
     navigate('/');
   };
 
-  const register = (user, password) => {
+  const register = () => {
     navigate('/login');
   };
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import PaymentForm from '../components/PaymentForm';
 import PaymentList from '../components/PaymentList';
 import PaymentProvider from '../provider/Payment';

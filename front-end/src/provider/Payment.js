@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { createContext, useEffect, useState } from 'react';
 
 export const PaymentContext = createContext();
@@ -10,7 +12,7 @@ const PaymentProvider = ({ children }) => {
     if (storagePayments) {
       setPayments(JSON.parse(storagePayments));
     }
-  }
+  };
 
   const addPayment = (data) => {
     const nextPaymentDate = new Date();
@@ -18,16 +20,16 @@ const PaymentProvider = ({ children }) => {
     const newPayment = {
       ...data,
       paid: 0,
-      nextPaymentDate
+      nextPaymentDate,
     };
     const updatedPayments = [...payments, newPayment];
 
     localStorage.setItem(
       'caderneta-payments',
-      JSON.stringify(updatedPayments)
+      JSON.stringify(updatedPayments),
     );
     setPayments(updatedPayments);
-  }
+  };
 
   useEffect(() => {
     fetchPayments();
@@ -45,4 +47,8 @@ const PaymentProvider = ({ children }) => {
   );
 };
 
-export default PaymentProvider
+PaymentProvider.propTypes = {
+  children: PropTypes.element,
+};
+
+export default PaymentProvider;

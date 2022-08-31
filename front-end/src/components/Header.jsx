@@ -1,3 +1,4 @@
+import React from 'react';
 import { BsJournalText } from 'react-icons/bs';
 
 const Header = () => (

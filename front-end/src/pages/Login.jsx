@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../provider/User';
 
 const Login = () => {
@@ -6,7 +6,7 @@ const Login = () => {
     user: '',
     password: '',
   });
-  const { user, login } = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
   const handleInput = ({ target: { id, value } }) => (
     setFormData({ ...formData, [id]: value })

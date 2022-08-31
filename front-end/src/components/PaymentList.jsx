@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { PaymentContext } from '../provider/Payment';
 
 const PaymentList = () => {
@@ -7,10 +7,6 @@ const PaymentList = () => {
   const getFormattedDate = (date) => (
     date.toLocaleDateString('pt-BR')
   );
-
-  const payInstallment = (payment) => {
-
-  }
 
   return (
     <table>
@@ -47,6 +43,6 @@ const PaymentList = () => {
       </tbody>
     </table>
   );
-}
+};
 
 export default PaymentList;

@@ -1,12 +1,10 @@
-import { useCookies } from 'react-cookie';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import UserProvider from './provider/User';
 
 const App = () => {
-  const [cookies, setCookie] = useCookies(['caderneta-user']);
-
   return (
     <UserProvider>
       <Header />

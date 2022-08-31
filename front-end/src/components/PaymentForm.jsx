@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { PaymentContext } from '../provider/Payment';
 
 const PaymentForm = () => {
@@ -7,8 +7,8 @@ const PaymentForm = () => {
     procedure: '',
     total: '',
     entry: '',
-    installments: '1'
-  }
+    installments: '1',
+  };
   const [formData, setFormData] = useState(INITIAL_DATA);
   const { addPayment } = useContext(PaymentContext);
 
@@ -92,7 +92,7 @@ const PaymentForm = () => {
           Inserir na Caderneta
         </button>
       </form>
-  )
-}
+  );
+};
 
 export default PaymentForm;
