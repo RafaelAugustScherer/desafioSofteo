@@ -13,7 +13,8 @@ const PaymentProvider = ({ children }) => {
   }
 
   const addPayment = (data) => {
-    const updatedPayments = [...payments, data];
+    const newPayment = { ...data, paid: 0, nextPayment: new Date() + 30 };
+    const updatedPayments = [...payments, newPayment];
 
     localStorage.setItem(
       'caderneta-payments',

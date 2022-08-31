@@ -2,23 +2,36 @@ import { useContext, useState } from 'react';
 import { PaymentContext } from '../provider/Payment';
 
 const PaymentForm = () => {
-  const [formData, setFormData] = useState({
+  const INITIAL_DATA = {
     client: '',
-    value: '',
-    paymentMethod: '0'
-  });
+    procedure: '',
+    total: '',
+    entry: '',
+    installments: '1'
+  }
+  const [formData, setFormData] = useState(INITIAL_DATA);
   const { addPayment } = useContext(PaymentContext);
 
   const handleInput = ({ target: { id, value } }) => (
     setFormData({ ...formData, [id]: value })
   );
 
-  const handleSubmit = () => (
-    addPayment({
+  const handleSubmit = () => {
+    const formattedData = {
       ...formData,
-      paymentMethod: +formData.paymentMethod,
-    })
-  );
+      entry: +formData.entry,
+      total: +formData.total,
+      installments: +formData.installments,
+    };
+
+    if (formattedData.entry > formattedData.total) {
+      alert('Valor da entrada maior que o total!');
+      return;
+    }
+    
+    addPayment(formattedData);
+    setFormData(INITIAL_DATA);
+  };
 
   return (
     <form>
@@ -31,23 +44,38 @@ const PaymentForm = () => {
           onChange={handleInput}
           value={formData.client}
         />
-        <label htmlFor="value">Valor: </label>
+        <label htmlFor="procedure">Procedimento: </label>
+        <input
+          type="text"
+          id="procedure"
+          name="procedure"
+          onChange={handleInput}
+          value={formData.procedure}
+        />
+        <label htmlFor="total">Valor Total: </label>
         <input
           type="number"
-          id="value"
-          name="value"
+          id="total"
+          name="total"
           onChange={handleInput}
-          value={formData.value}
+          value={formData.total}
         />
-        <label htmlFor="paymentMethod">Forma de pagamento: </label>
-        <select
-          id="paymentMethod"
-          name="paymentMethod"
+        <label htmlFor="entry">Entrada: </label>
+        <input
+          type="number"
+          id="entry"
+          name="entry"
           onChange={handleInput}
-          value={formData.paymentMethod}
+          value={formData.entry}
+        />
+        <label htmlFor="installments">Parcelas: </label>
+        <select
+          id="installments"
+          name="installments"
+          onChange={handleInput}
+          value={formData.installments}
         >
-          <option value="0">À vista</option>
-          { [...Array(12).keys()].map((key) => {
+          { [...Array(36).keys()].map((key) => {
             const value = key + 1;
             return (<option
               key={`payment-option-${value}`}
