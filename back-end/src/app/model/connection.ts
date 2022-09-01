@@ -1,18 +1,16 @@
 import { connect, ConnectOptions } from 'mongoose';
+import dotenv from 'dotenv';
 
-const {
-  DB_USERNAME,
-  DB_PASSWORD,
-} = process.env;
-const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.gfw2a.mongodb.net/?retryWrites=true&w=majority`;
+dotenv.config();
 
+const { DB_CONNECTION_URI } = process.env;
 const options: ConnectOptions = {
   dbName: 'desafio-softeo',
   autoIndex: true,
 };
 
 const connectToDatabase = (
-  connectionUri = uri,
+  connectionUri = DB_CONNECTION_URI || '',
   connectionOptions = options,
 ) => connect(connectionUri, connectionOptions, (err) => {
   if (err) {
