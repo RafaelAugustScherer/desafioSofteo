@@ -1,8 +1,12 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
-const payListSchema = new Schema({
+const procedureSchema = new Schema({
   client: {
     type: String,
+    required: true,
+  },
+  userId: {
+    type: Types.ObjectId,
     required: true,
   },
   procedure: {
@@ -25,10 +29,13 @@ const payListSchema = new Schema({
     type: Number,
     required: true,
   },
-  nextPaymentDate: {
-    type: Date,
+  paymentDates: {
+    type: [String],
     required: true,
   },
+},
+{
+  versionKey: false,
 });
 
-export default model('payList', payListSchema);
+export default model('procedures', procedureSchema);

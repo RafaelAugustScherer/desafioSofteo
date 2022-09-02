@@ -14,6 +14,9 @@ const ERRORS = {
     INVALID_TOKEN: ErrorConstructor(403, 'Invalid token'),
     INVALID_CREDENTIALS: ErrorConstructor(403, 'Invalid credentials'),
   },
+  PROCEDURE: {
+    NOT_FOUND: ErrorConstructor(404, 'Procedure not found'),
+  },
 };
 
 export default ERRORS;
