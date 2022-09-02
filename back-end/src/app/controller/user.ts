@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import UserService from '../service/user';
+import AuthUtilities from '../utilities/auth';
 
 const create: RequestHandler = async (req ,res) => {
   const response = await UserService.create(req.body);
@@ -7,8 +8,8 @@ const create: RequestHandler = async (req ,res) => {
 };
 
 const login: RequestHandler = async (req, res) => {
-  const { token } = res.locals;
-  await UserService.login(req.body);
+  const { _id } = await UserService.login(req.body);
+  const token = AuthUtilities.generateToken(_id);
 
   return res.status(200).json({ token });
 };

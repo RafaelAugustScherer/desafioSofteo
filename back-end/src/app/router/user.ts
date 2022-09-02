@@ -14,7 +14,6 @@ userRouter.route('/register')
 userRouter.route('/login')
   .post(
     UserMiddleware.validateLogin,
-    AuthMiddleware.generateToken,
     UserController.login,
   );
   

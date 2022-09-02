@@ -3,7 +3,7 @@ import UserModel from '../model/user';
 import UserUtilities from '../utilities/user';
 import ERRORS from '../utilities/error';
 
-const create = async (payload: User): Promise<Partial<User>> => {
+const create = async (payload: User) => {
   const isAlreadyCreated = await UserModel.findOne(
     { user: payload.user },
   );
@@ -21,7 +21,7 @@ const create = async (payload: User): Promise<Partial<User>> => {
   return user;
 };
 
-const login = async (payload: User): Promise<void> => {
+const login = async (payload: User) => {
   const response = await UserModel.findOne({
     user: payload.user,
     password: UserUtilities.hashPassword(payload.password),
@@ -30,6 +30,8 @@ const login = async (payload: User): Promise<void> => {
   if (!response) {
     throw ERRORS.AUTH.INVALID_CREDENTIALS;
   }
+
+  return response;
 };
 
 export default {

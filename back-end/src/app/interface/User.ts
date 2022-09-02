@@ -1,5 +1,7 @@
+import { Types } from 'mongoose';
+
 interface User {
-  id?: string,
+  _id?: Types.ObjectId,
   user: string,
   password: string,
 }
