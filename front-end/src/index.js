@@ -5,6 +5,7 @@ import App from './App';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />}/>
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>

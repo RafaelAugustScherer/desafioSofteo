@@ -27,10 +27,12 @@ const UserProvider = () => {
 
   const switchPageIfUnauthorized = async () => {
     const AUTH_PAGES = ['/login', '/register'];
-    
-    if (cookies['caderneta-token']) {
+
+    if (AUTH_PAGES.includes(location.pathname)) {
+      if (!cookies['caderneta-token']) return;
+
       const authStatus = await authenticate();
-      if (authStatus && AUTH_PAGES.includes(location.pathname)) {
+      if (authStatus) {
         navigate('/');
         return;
       }
@@ -41,30 +43,31 @@ const UserProvider = () => {
   };
 
   const login = async (user, password) => {
-    try {
-      console.log(user, password);
-      const { data: { token } } = await axios.post(
-        `${REACT_APP_SERVER}/user/login`,
-        { user, password },
-      );
-      setCookie('caderneta-token', token, { maxAge: 86400 });
-      authenticate(token);
-      navigate('/');
-    } catch (e) {
-      return false;
-    }
+    const response = await axios.post(
+      `${REACT_APP_SERVER}/user/login`,
+      { user, password },
+    ).catch(({ response }) => response.data);
+
+    if (response.error) return response;
+
+    const { token } = response.data;
+    const tokenExpirationDate = new Date();
+    tokenExpirationDate.setDate(tokenExpirationDate.getDate() + 2);
+    setCookie(
+      'caderneta-token', token, { expires: tokenExpirationDate },
+    );
+    authenticate(token);
+    
+    return response;
   };
 
-  const register = async () => {
-    try {
-      await axios.post(
-        `${REACT_APP_SERVER}/user/register`,
-        { user, password },
-      );
-      navigate('/login');
-    } catch (e) {
-      return false;
-    }
+  const register = async (user, password) => {
+    const response = await axios.post(
+      `${REACT_APP_SERVER}/user/register`,
+      { user, password },
+    ).catch(({ response }) => response.data);
+    
+    return response;
   };
 
   useEffect(() => {

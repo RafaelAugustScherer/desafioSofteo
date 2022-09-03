@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Alert, AlertTitle } from '@mui/material';
 import { UserContext } from '../provider/User';
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
     user: '',
     password: '',
   });
-  const [loginError, setLoginError] = useState(false);
-  const { login } = useContext(UserContext);
+  const [registerError, setRegisterError] = useState();
+  const { register } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleInput = ({ target: { id, value } }) => (
@@ -18,18 +18,19 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await login(formData.user, formData.password);
-    if (response.error) setLoginError(response.error);
-    else navigate('/');
+    const response = await register(formData.user, formData.password);
+    
+    if (response.error) setRegisterError(response.error);
+    else navigate('/login');
   };
 
   return (
     <form onSubmit={handleSubmit}>
       {
-        loginError && (
-          <Alert severity="error" onClose={() => setLoginError(false)}>
+        registerError && (
+          <Alert severity="error" onClose={() => setRegisterError()}>
             <AlertTitle>Erro</AlertTitle>
-            { loginError }
+            { registerError }
           </Alert>
         )
       }
@@ -40,6 +41,7 @@ const Login = () => {
         name="user"
         onChange={handleInput}
         value={formData.user}
+        minLength="5"
         required
       />
       <label htmlFor="password">Senha: </label>
@@ -49,12 +51,12 @@ const Login = () => {
         name="password"
         onChange={handleInput}
         value={formData.password}
+        minLength="6"
         required
       />
-      <button type="submit">Entrar</button>
-      Não tem conta ainda? <a href="/register">Clique aqui para se cadastrar</a>
+      <button type="submit">Cadastrar</button>
     </form>
   );
 };
 
-export default Login;
+export default Register;
