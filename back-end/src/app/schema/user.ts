@@ -6,8 +6,8 @@ const create = Joi.object({
 });
 
 const login = Joi.object({
-  user: Joi.string().min(5).required(),
-  password: Joi.string().min(6).required(),
+  user: Joi.string().required(),
+  password: Joi.string().required(),
 });
 
 export default {
