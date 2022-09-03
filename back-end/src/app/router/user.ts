@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserMiddleware from '../middleware/user';
+import AuthMiddleware from '../middleware/auth';
 import UserController from '../controller/user';
 
 const userRouter = Router();
@@ -15,6 +16,11 @@ userRouter.route('/login')
     UserMiddleware.validateLogin,
     UserController.login,
   );
-  
+
+userRouter.route('/authenticate')
+  .get(
+    AuthMiddleware.validateToken,
+    UserController.authenticate,
+  );
 
 export default userRouter;

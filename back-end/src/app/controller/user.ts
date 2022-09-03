@@ -14,8 +14,13 @@ const login: RequestHandler = async (req, res) => {
   return res.status(200).json({ token });
 };
 
+const authenticate: RequestHandler = async (req, res) => {
+  const { id, user } = res.locals;
+  return res.status(200).json({ id, user });
+};
 
 export default {
   create,
   login,
+  authenticate,
 };
