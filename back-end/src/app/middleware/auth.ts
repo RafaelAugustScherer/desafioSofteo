@@ -10,8 +10,9 @@ const validateToken: RequestHandler = async (req, res, next) => {
   }
   
   try {
-    const { id } = JWT.decode(token) as JwtPayload;
+    const { id, user } = JWT.decode(token) as JwtPayload;
     res.locals.id = id;
+    res.locals.user = user;
   } catch (e) {
     throw ERRORS.AUTH.INVALID_TOKEN;
   }
