@@ -7,7 +7,7 @@ export const UserContext = createContext();
 
 const UserProvider = () => {
   const { REACT_APP_SERVER } = process.env;
-  const [cookies, setCookie, removeCookie] = useCookies(['caderneta-token']);
+  const [cookies, setCookie] = useCookies(['caderneta-token']);
   const [user, setUser] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,17 +28,17 @@ const UserProvider = () => {
   const switchPageIfUnauthorized = async () => {
     const AUTH_PAGES = ['/login', '/register'];
 
-    if (AUTH_PAGES.includes(location.pathname)) {
-      if (!cookies['caderneta-token']) return;
-
+    if (cookies['caderneta-token']) {
       const authStatus = await authenticate();
+
       if (authStatus) {
         navigate('/');
         return;
       }
     }
-    
-    removeCookie('caderneta-token');
+
+    if (AUTH_PAGES.includes(location.pathname)) return;
+
     navigate('/login');
   };
 

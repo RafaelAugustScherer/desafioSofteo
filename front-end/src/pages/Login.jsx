@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Alert, AlertTitle } from '@mui/material';
 import { UserContext } from '../provider/User';
+import ErrorAlert from '../components/ErrorAlert';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -27,10 +27,7 @@ const Login = () => {
     <form onSubmit={handleSubmit}>
       {
         loginError && (
-          <Alert severity="error" onClose={() => setLoginError(false)}>
-            <AlertTitle>Erro</AlertTitle>
-            { loginError }
-          </Alert>
+          <ErrorAlert content={loginError} setContent={setLoginError} />
         )
       }
       <label htmlFor="user">Usuário: </label>

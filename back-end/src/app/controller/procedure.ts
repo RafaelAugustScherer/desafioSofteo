@@ -18,9 +18,7 @@ const read: RequestHandler = async (req, res) => {
 
 const update: RequestHandler = async (req, res) => {
   const payload = req.body as Procedure;
-  const { procedureId } = req.params;
-
-  const response = await ProcedureService.update(procedureId, payload);
+  const response = await ProcedureService.update(payload);
   return res.status(200).json(response);
 };
 

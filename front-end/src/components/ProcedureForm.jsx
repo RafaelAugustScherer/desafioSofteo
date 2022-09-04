@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { PaymentContext } from '../provider/Payment';
+import { ProcedureContext } from '../provider/Procedure';
 
-const PaymentForm = () => {
+const ProcedureForm = () => {
   const INITIAL_DATA = {
     client: '',
     procedure: '',
@@ -10,7 +10,7 @@ const PaymentForm = () => {
     installments: '1',
   };
   const [formData, setFormData] = useState(INITIAL_DATA);
-  const { addPayment } = useContext(PaymentContext);
+  const { addProcedure } = useContext(ProcedureContext);
 
   const handleInput = ({ target: { id, value } }) => (
     setFormData({ ...formData, [id]: value })
@@ -29,7 +29,7 @@ const PaymentForm = () => {
       return;
     }
     
-    addPayment(formattedData);
+    addProcedure(formattedData);
     setFormData(INITIAL_DATA);
   };
 
@@ -95,4 +95,4 @@ const PaymentForm = () => {
   );
 };
 
-export default PaymentForm;
+export default ProcedureForm;

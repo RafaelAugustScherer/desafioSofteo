@@ -12,7 +12,10 @@ const read = async (userId: string) => {
   return response;
 };
 
-const update = async (procedureId: string, payload: Partial<Procedure>) => {
+const update = async (payload: Partial<Procedure>) => {
+  const procedureId = payload.id;
+  delete payload.id;
+
   const response = await ProcedureModel.findByIdAndUpdate(procedureId, payload, { new: true });
 
   if (!response) {

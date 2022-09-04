@@ -1,16 +1,16 @@
 import React from 'react';
-import PaymentForm from '../components/PaymentForm';
-import PaymentList from '../components/PaymentList';
-import PaymentProvider from '../provider/Payment';
+import ProcedureForm from '../components/ProcedureForm';
+import ProcedureList from '../components/ProcedureList';
+import ProcedureProvider from '../provider/Procedure';
 
 const Home = () => {
 
   return (
     <div>
-      <PaymentProvider>
-        <PaymentForm />
-        <PaymentList />
-      </PaymentProvider>
+      <ProcedureProvider>
+        <ProcedureForm />
+        <ProcedureList />
+      </ProcedureProvider>
     </div>
   );
 };
