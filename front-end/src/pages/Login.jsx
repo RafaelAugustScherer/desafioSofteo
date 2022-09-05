@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { UserContext } from '../provider/User';
 import ErrorAlert from '../components/ErrorAlert';
 
@@ -9,6 +11,7 @@ const Login = () => {
     password: '',
   });
   const [loginError, setLoginError] = useState(false);
+  const [ showPassword, setShowPassword ] = useState();
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -24,33 +27,61 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        maxWidth: '720px',
+      }}
+      mx={5}
+    >
+      <h2>Formulário de login</h2>
       {
         loginError && (
           <ErrorAlert content={loginError} setContent={setLoginError} />
         )
       }
-      <label htmlFor="user">Usuário: </label>
-      <input
-        type="text"
+      <TextField
         id="user"
-        name="user"
+        label="Usuário"
         onChange={handleInput}
         value={formData.user}
-        required
+        fullWidth
+        margin="normal"
       />
-      <label htmlFor="password">Senha: </label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        onChange={handleInput}
-        value={formData.password}
-        required
-      />
-      <button type="submit">Entrar</button>
+      <FormControl variant="outlined" fullWidth margin="normal">
+        <InputLabel htmlFor="password">Senha</InputLabel>
+        <OutlinedInput
+          type={showPassword ? 'text' : 'password'}
+          id="password"
+          onChange={handleInput}
+          value={formData.password}
+          label="Senha"
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="mudar visibilidade da senha"
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        size="large"
+      >
+        Entrar
+      </Button>
+      <Box component="p" sx={{ fontWeight: 'bold' }}>
       Não tem conta ainda? <a href="/register">Clique aqui para se cadastrar</a>
-    </form>
+      </Box>
+    </Box>
   );
 };
 

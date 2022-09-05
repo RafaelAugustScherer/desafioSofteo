@@ -27,6 +27,7 @@ const ProcedureProvider = ({ children }) => {
     const payload = { ...data, paymentDates };
     const updatedProcedures = [...procedures, {...payload, paid: 0}];
 
+    console.log(payload);
     const response = await axios.post(
       `${REACT_APP_SERVER}/procedure`,
       payload,

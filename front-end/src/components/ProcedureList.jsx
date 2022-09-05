@@ -23,6 +23,7 @@ const ProcedureList = () => {
 
   return (
     <>
+    <h2>Caderneta</h2>
     {
       listError && (
       <ErrorAlert content={listError} setContent={setListError} />
