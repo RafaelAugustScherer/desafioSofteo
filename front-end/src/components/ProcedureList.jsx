@@ -3,66 +3,85 @@ import moment from 'moment';
 import 'moment/locale/pt-br';
 import { ProcedureContext } from '../provider/Procedure';
 import ErrorAlert from './ErrorAlert';
+import { DataGrid } from '@mui/x-data-grid';
+import { Box } from '@mui/system';
+import PayInstallmentButton from './PayInstallmentButton';
 
 const ProcedureList = () => {
-  const { procedures, payInstallment } = useContext(ProcedureContext);
-  const [listError, setListError] = useState();
+  const { procedures } = useContext(ProcedureContext);
+  const [ listError, setListError ] = useState();
 
   const getFormattedDate = (paymentDates, paid) => (
-    moment(paymentDates[paid], 'DD/MM/YYYY').format('L')
+    moment(paymentDates[ paid ], 'DD/MM/YYYY').format('L')
   );
 
   const calculateInstallment = (total, entry, installments) => (
-    ((total - entry) / installments).toFixed(2)
+    ((total - entry) / installments).toFixed(2).split('.').join(',')
   );
 
-  const payInstallmentHandler = async (installmentId) => {
-    const response = await payInstallment(installmentId);
-    if (response.error) setListError(response.error);
-  };
+  const columnFieldGenerate = (field, headerName, minWidth, otherProps) => (
+    { field, headerName, minWidth, flex: 1, ...otherProps }
+  );
+
+  const columns = [
+    columnFieldGenerate('client', 'Cliente', 120),
+    columnFieldGenerate('procedure', 'Procedimento', 150),
+    columnFieldGenerate('total', 'Total', 100,
+      {
+        valueFormatter: (item) => `R$ ${item.value}`,
+      },
+    ),
+    columnFieldGenerate('entry', 'Entrada', 100,
+      {
+        valueFormatter: (item) => `R$ ${item.entry}`,
+      },
+    ),
+    columnFieldGenerate('installment', 'Valor da Parcela', 130,
+      {
+        valueGetter: ({ row }) => row,
+        valueFormatter: ({ value: p }) => `R$ ${calculateInstallment(p.total, p.entry, p.installments)}`,
+      },
+    ),
+    columnFieldGenerate('paidInstallments', 'Parcelas Pagas', 140,
+      {
+        valueGetter: ({ row }) => row,
+        valueFormatter: ({ value: p }) => `${p.paid}/${p.installments}`,
+      },
+    ),
+    columnFieldGenerate('nextInstallmentDate', 'Próxima Parcela', 130, 
+      {
+        valueGetter: ({ row }) => row,
+        valueFormatter: ({ value: p }) => getFormattedDate(p.paymentDates, p.paid),
+      },
+    ),
+    columnFieldGenerate('options', 'Opções', 150,
+      {
+        valueGetter: ({ row }) => row,
+        renderCell: ({ row: p }) => <PayInstallmentButton procedure={p} setError={setListError} />,
+      },
+    ),
+  ];
+
+  const rows = procedures.map((p) => ({ ...p, id: p._id }));
 
   return (
     <>
-    <h2>Caderneta</h2>
-    {
-      listError && (
-      <ErrorAlert content={listError} setContent={setListError} />
-      )
-    }
-    <table>
-      <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Procedimento</th>
-          <th>Total</th>
-          <th>Entrada</th>
-          <th>Valor da Parcela</th>
-          <th>Parcelas Pagas</th>
-          <th>Próxima parcela</th>
-          <th>Opções</th>
-        </tr>
-      </thead>
-      <tbody>
-      {procedures.map((p, k) => (
-        <tr key={`${p.client}-${k}`}>
-          <td>{p.client}</td>
-          <td>{p.procedure}</td>
-          <td>R$ {p.total}</td>
-          <td>R$ {p.entry}</td>
-          <td>R$ {calculateInstallment(p.total, p.entry, p.installments)}</td>
-          <td>{p.paid}/{p.installments}</td>
-          <td>{getFormattedDate(p.paymentDates, p.paid)}</td>
-          <td><button
-            type="button"
-            disabled={p.paid === p.installments}
-            onClick={() => payInstallmentHandler(p._id)}
-          >
-            Pagar parcela
-          </button></td>
-        </tr>
-      ))}
-      </tbody>
-    </table>
+      <h2>Caderneta</h2>
+      {
+        listError && (
+          <ErrorAlert content={listError} setContent={setListError} />
+        )
+      }
+      <Box component="div" sx={{ height: '400px' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[ 10 ]}
+          density="comfortable"
+          disableColumnMenu
+        />
+      </Box>
     </>
   );
 };
