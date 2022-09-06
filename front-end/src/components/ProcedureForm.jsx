@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Box, Button, FormControl, InputAdornment, InputLabel, TextField, MenuItem, FilledInput } from '@mui/material';
 import { ProcedureContext } from '../provider/Procedure';
-import ErrorAlert from './ErrorAlert';
+import ErrorAlert from '../partials/ErrorAlert';
 
 const ProcedureForm = () => {
   const INITIAL_DATA = {

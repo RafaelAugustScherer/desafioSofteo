@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { UserContext } from '../provider/User';
-import ErrorAlert from '../components/ErrorAlert';
+import ErrorAlert from '../partials/ErrorAlert';
 
 const Login = () => {
   const [formData, setFormData] = useState({

@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react';
+import { Box } from '@mui/system';
+import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 import { ProcedureContext } from '../provider/Procedure';
-import ErrorAlert from './ErrorAlert';
-import { DataGrid } from '@mui/x-data-grid';
-import { Box } from '@mui/system';
-import PayInstallmentButton from './PayInstallmentButton';
+import ErrorAlert from '../partials/ErrorAlert';
+import PayInstallmentButton from '../partials/PayInstallmentButton';
+import SearchField from '../partials/SearchField';
 
 const ProcedureList = () => {
   const { procedures } = useContext(ProcedureContext);
   const [ listError, setListError ] = useState();
+  const [ filteredProcedures, setFilteredProcedures ] = useState(procedures);
 
   const getFormattedDate = (paymentDates, paid) => (
     moment(paymentDates[ paid ], 'DD/MM/YYYY').format('L')
@@ -62,7 +64,7 @@ const ProcedureList = () => {
     ),
   ];
 
-  const rows = procedures.map((p) => ({ ...p, id: p._id }));
+  const rows = filteredProcedures.map((p) => ({ ...p, id: p._id }));
 
   return (
     <>
@@ -72,7 +74,21 @@ const ProcedureList = () => {
           <ErrorAlert content={listError} setContent={setListError} />
         )
       }
-      <Box component="div" sx={{ height: '400px' }}>
+      <Box
+        component="div"
+        sx={{
+          height: '450px',
+          display: 'flex',
+          flexDirection: 'column',
+          '& .MuiTextField-root': { alignSelf: 'start', ml: 2, mb: 2 },
+        }}
+      >
+        <SearchField
+          arrayToSearch={procedures}
+          fieldToSearch="client"
+          setToResult={setFilteredProcedures}
+          placeholder="Buscar por cliente..."
+        />
         <DataGrid
           rows={rows}
           columns={columns}
