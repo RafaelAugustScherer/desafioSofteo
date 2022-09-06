@@ -1,12 +1,21 @@
+import { Box } from '@mui/material';
 import React from 'react';
 import { BsJournalText } from 'react-icons/bs';
-import style from './style/Header.module.css';
 
 const Header = () => (
-  <header className={style.header}>
+  <Box component="header" sx={{
+    backgroundColor: '#282c34',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 'calc(16px + 2vmin)',
+    color: 'white',
+    minWidth: '100%',
+    '& svg': { marginRight: '15px' },
+  }}>
     <BsJournalText />
     <p>Caderneta Online</p>
-  </header>
+  </Box>
 );
 
 export default Header;
