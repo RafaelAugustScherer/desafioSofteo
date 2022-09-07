@@ -27,7 +27,6 @@ const ProcedureProvider = ({ children }) => {
     const payload = { ...data, paymentDates };
     const updatedProcedures = [...procedures, {...payload, paid: 0}];
 
-    console.log(payload);
     const response = await axios.post(
       `${REACT_APP_SERVER}/procedure`,
       payload,
@@ -38,19 +37,36 @@ const ProcedureProvider = ({ children }) => {
     return response;
   };
 
-  const payInstallment = async (installmentId) => {
-    const procedure = procedures.find(({ _id }) => _id === installmentId);
+  const deleteProcedure = async (procedureId) => {
+
+    const response = await axios.delete(
+      `${REACT_APP_SERVER}/procedure`,
+      { 
+        headers: { 'Authorization': cookies['caderneta-token'] },
+        data: { id: procedureId },
+      },
+    ).catch(({ response }) => response.data);
+
+    if (!response.error) {
+      const updatedProcedures = procedures.filter((p) => p._id !== procedureId);
+      setProcedures(updatedProcedures);
+    }
+    return response;
+  };
+
+  const payInstallment = async (procedureId) => {
+    const procedure = procedures.find(({ _id }) => _id === procedureId);
     const paid = procedure.paid + 1;
 
     const response = await axios.patch(
       `${REACT_APP_SERVER}/procedure`,
-      { id: installmentId, paid },
+      { id: procedureId, paid },
       { headers: { 'Authorization': cookies['caderneta-token'] } },
     ).catch(({ response }) => response.data);
 
     if (!response.error) {
       const updatedProcedures = procedures.map((p) => {
-        if (p._id === installmentId) p.paid = paid;
+        if (p._id === procedureId) p.paid = paid;
         return p;
       });
       setProcedures(updatedProcedures);
@@ -65,6 +81,7 @@ const ProcedureProvider = ({ children }) => {
   const value = {
     procedures,
     addProcedure,
+    deleteProcedure,
     payInstallment,
   };
 

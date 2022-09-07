@@ -1,25 +1,28 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
+import { AttachMoney } from '@mui/icons-material';
 import { ProcedureContext } from '../provider/Procedure';
 
 const PayInstallmentButton = ({ procedure, setError }) => {
   const { payInstallment } = useContext(ProcedureContext);
 
-  const payInstallmentHandler = async (installmentId) => {
-    const response = await payInstallment(installmentId);
+  const payInstallmentHandler = async (procedureId) => {
+    const response = await payInstallment(procedureId);
     if (response.error) setError(response.error);
   };
 
   return (
-    <Button
-      variant="contained"
-      size="small"
-      disabled={procedure.paid === procedure.installments}
-      onClick={() => payInstallmentHandler(procedure._id)}
-    >
-      Pagar parcela
-    </Button>
+    <Tooltip title="Pagar parcela">
+      <IconButton
+        aria-label="Pagar parcela"
+        disabled={procedure.paid === procedure.installments}
+        onClick={() => payInstallmentHandler(procedure._id)}
+        sx={{ color: '#118c4f' }}
+      >
+        <AttachMoney />
+      </IconButton>
+    </Tooltip>
   );
 };
 

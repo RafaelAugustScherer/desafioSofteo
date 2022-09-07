@@ -6,6 +6,7 @@ import 'moment/locale/pt-br';
 import { ProcedureContext } from '../provider/Procedure';
 import ErrorAlert from '../partials/ErrorAlert';
 import PayInstallmentButton from '../partials/PayInstallmentButton';
+import DeleteProcedureButton from '../partials/DeleteProcedureButton';
 import SearchField from '../partials/SearchField';
 
 const ProcedureList = () => {
@@ -59,7 +60,12 @@ const ProcedureList = () => {
     columnFieldGenerate('options', 'Opções', 150,
       {
         valueGetter: ({ row }) => row,
-        renderCell: ({ row: p }) => <PayInstallmentButton procedure={p} setError={setListError} />,
+        renderCell: ({ row: p }) => (
+          <>
+            <PayInstallmentButton procedure={p} setError={setListError} />
+            <DeleteProcedureButton procedure={p} setError={setListError} />
+          </>
+        ),
       },
     ),
   ];
@@ -100,6 +106,7 @@ const ProcedureList = () => {
           rowsPerPageOptions={[ 10 ]}
           density="comfortable"
           disableColumnMenu
+          disableSelectionOnClick
           getRowClassName={({ row: p }) => {
             const nextPaymentDate = getFormattedDate(p.paymentDates, p.paid);
             if (moment() > moment(nextPaymentDate, 'DD/MM/YYYY')) {
