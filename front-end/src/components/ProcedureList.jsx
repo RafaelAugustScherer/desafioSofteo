@@ -35,7 +35,7 @@ const ProcedureList = () => {
     ),
     columnFieldGenerate('entry', 'Entrada', 100,
       {
-        valueFormatter: (item) => `R$ ${item.entry}`,
+        valueFormatter: (item) => `R$ ${item.value}`,
       },
     ),
     columnFieldGenerate('installment', 'Valor da Parcela', 130,
@@ -81,6 +81,10 @@ const ProcedureList = () => {
           display: 'flex',
           flexDirection: 'column',
           '& .MuiTextField-root': { alignSelf: 'start', ml: 2, mb: 2 },
+          '& .lateInstallmentRow': {
+            bgcolor: '#fac3c3',
+            '&:hover': { bgcolor: '#ebb2b2' },
+          },
         }}
       >
         <SearchField
@@ -96,6 +100,12 @@ const ProcedureList = () => {
           rowsPerPageOptions={[ 10 ]}
           density="comfortable"
           disableColumnMenu
+          getRowClassName={({ row: p }) => {
+            const nextPaymentDate = getFormattedDate(p.paymentDates, p.paid);
+            if (moment() > moment(nextPaymentDate, 'DD/MM/YYYY')) {
+              return 'lateInstallmentRow';
+            }
+          }}
         />
       </Box>
     </>
