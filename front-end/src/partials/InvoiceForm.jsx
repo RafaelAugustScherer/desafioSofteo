@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Box, FormControlLabel, Checkbox, Button } from '@mui/material';
@@ -51,6 +51,10 @@ const InvoiceForm = ({ setInvoice }) => {
 
     setInvoice({ received: receivedTotal, unreceived: unreceivedTotal });
   };
+
+  useEffect(() => {
+    procedures && calculateInvoice();
+  }, [procedures]);
   
   return (
     <Box component="form" sx={{

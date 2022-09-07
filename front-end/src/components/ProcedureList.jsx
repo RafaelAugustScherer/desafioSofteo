@@ -55,6 +55,11 @@ const ProcedureList = () => {
       {
         valueGetter: ({ row }) => row,
         valueFormatter: ({ value: p }) => getFormattedDate(p.paymentDates, p.paid),
+        sortComparator: (v1, v2) => {
+          const date1 = moment(v1.paymentDates[v1.paid], 'DD/MM/YYYY');
+          const date2 = moment(v2.paymentDates[v2.paid], 'DD/MM/YYYY');
+          return date1 - date2;
+        },
       },
     ),
     columnFieldGenerate('options', 'Opções', 150,
@@ -113,6 +118,10 @@ const ProcedureList = () => {
               return 'lateInstallmentRow';
             }
           }}
+          initialState={{ sorting: { sortModel: [{
+            field: 'nextInstallmentDate',
+            sort: 'asc',
+          }] } }}
         />
       </Box>
     </>
