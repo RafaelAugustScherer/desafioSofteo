@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Box } from '@mui/system';
-import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import { Box } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import { ProcedureContext } from '../provider/Procedure';
 import ErrorAlert from '../partials/ErrorAlert';
 import PayInstallmentButton from '../partials/PayInstallmentButton';
 import DeleteProcedureButton from '../partials/DeleteProcedureButton';
-import SearchField from '../partials/SearchField';
+import ProcedureListFilters from '../partials/ProcedureListFilters';
 
 const ProcedureList = () => {
   const { procedures } = useContext(ProcedureContext);
@@ -15,7 +15,7 @@ const ProcedureList = () => {
   const [ filteredProcedures, setFilteredProcedures ] = useState(procedures);
 
   const getFormattedDate = (paymentDates, paid) => (
-    moment(paymentDates[ paid ], 'DD/MM/YYYY').format('L')
+    moment(paymentDates[paid] || paymentDates[paid - 1], 'DD/MM/YYYY').format('L')
   );
 
   const calculateInstallment = (total, entry, installments) => (
@@ -92,17 +92,13 @@ const ProcedureList = () => {
           display: 'flex',
           flexDirection: 'column',
           '& .MuiTextField-root': { alignSelf: 'start', ml: 2, mb: 2 },
-          '& .lateInstallmentRow': {
-            bgcolor: '#fac3c3',
-            '&:hover': { bgcolor: '#ebb2b2' },
-          },
+          '& .lateInstallmentRow': { bgcolor: '#fac3c3' },
+          '& .paidInstallmentRow': { bgcolor: '#b8fcca' },
         }}
       >
-        <SearchField
-          arrayToSearch={procedures}
-          fieldToSearch="client"
-          setToResult={setFilteredProcedures}
-          placeholder="Buscar por cliente..."
+        <ProcedureListFilters
+          arrayToFilter={procedures}
+          setResultArray={setFilteredProcedures}
         />
         <DataGrid
           rows={rows}
@@ -113,8 +109,12 @@ const ProcedureList = () => {
           disableColumnMenu
           disableSelectionOnClick
           getRowClassName={({ row: p }) => {
-            const nextPaymentDate = getFormattedDate(p.paymentDates, p.paid);
-            if (moment() > moment(nextPaymentDate, 'DD/MM/YYYY')) {
+            const nextPaymentDate = moment(getFormattedDate(p.paymentDates, p.paid), 'DD/MM/YYYY');
+            const currentDate = moment();
+            if (p.paid >= p.paymentDates.length) {
+              return 'paidInstallmentRow';
+            }
+            if (currentDate > nextPaymentDate) {
               return 'lateInstallmentRow';
             }
           }}

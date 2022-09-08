@@ -14,14 +14,16 @@ const PayInstallmentButton = ({ procedure, setError }) => {
 
   return (
     <Tooltip title="Pagar parcela">
-      <IconButton
-        aria-label="Pagar parcela"
-        disabled={procedure.paid === procedure.installments}
-        onClick={() => payInstallmentHandler(procedure._id)}
-        sx={{ color: '#118c4f' }}
-      >
-        <AttachMoney />
-      </IconButton>
+      <span>
+        <IconButton
+          aria-label="Pagar parcela"
+          disabled={procedure.paid === procedure.installments}
+          onClick={() => payInstallmentHandler(procedure._id)}
+          sx={{ color: '#118c4f' }}
+        >
+          <AttachMoney />
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };
