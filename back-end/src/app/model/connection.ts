@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const { DB_CONNECTION_URI } = process.env;
+console.log(DB_CONNECTION_URI);
 const options: ConnectOptions = {
   dbName: 'desafio-softeo',
   autoIndex: true,

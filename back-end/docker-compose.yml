@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  back:
+    container_name: caderneta-backend
+    build: .
+    ports:
+      - 3001:3001
+    env_file:
+      - .env
+    environment:
+      - DB_CONNECTION_URI=mongodb://db:27017
+    volumes:
+      - ./src:/back-end/src
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 3002:27017
+    environment:
+      MONGO_INITDB_DATABASE: desafio-softeo
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
