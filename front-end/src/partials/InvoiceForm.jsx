@@ -61,35 +61,39 @@ const InvoiceForm = ({ setInvoice }) => {
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
-      '& > *': {
+      '& .MuiBox-root > *': {
         mx: 2,
         my: 2,
       },
     }}>
-      <DatePickerField
-        label="Data de início"
-        date={startDate}
-        setDate={setStartDate}
-        disabled={allPeriods}
-      />
-      <DatePickerField
-        label="Data final"
-        date={endDate}
-        setDate={setEndDate}
-        disabled={allPeriods}
-      />
-      <FormControlLabel
-        control={<Checkbox />}
-        onChange={() => setAllPeriods(!allPeriods)}
-        checked={allPeriods}
-        label="Todos os períodos"
-      />
-      <FormControlLabel
-        control={<Checkbox />}
-        onChange={() => setFuturePayments(!futurePayments)}
-        checked={futurePayments}
-        label="Incluir pagamentos futuros (não efetuados)"
-      />
+      <Box>
+        <DatePickerField
+          label="Data de início"
+          date={startDate}
+          setDate={setStartDate}
+          disabled={allPeriods}
+        />
+        <DatePickerField
+          label="Data final"
+          date={endDate}
+          setDate={setEndDate}
+          disabled={allPeriods}
+        />
+      </Box>
+      <Box sx={{ textAlign: 'left' }}>
+        <FormControlLabel
+          control={<Checkbox />}
+          onChange={() => setAllPeriods(!allPeriods)}
+          checked={allPeriods}
+          label="Todos os períodos"
+        />
+        <FormControlLabel
+          control={<Checkbox />}
+          onChange={() => setFuturePayments(!futurePayments)}
+          checked={futurePayments}
+          label="Incluir pagamentos futuros (não efetuados)"
+        />
+      </Box>
       <Button
         variant="contained"
         size="large"

@@ -57,6 +57,7 @@ const ProcedureForm = () => {
         <TextField
           id="client"
           label="Cliente"
+          placeholder="Rogério"
           onChange={handleInput}
           value={formData.client}
           margin="normal"
@@ -66,6 +67,7 @@ const ProcedureForm = () => {
         <TextField
           id="procedure"
           label="Procedimento"
+          placeholder="Tratamento de canal"
           onChange={handleInput}
           value={formData.procedure}
           margin="normal"
@@ -129,6 +131,7 @@ const ProcedureForm = () => {
           variant="contained"
           fullWidth
           size="large"
+          sx={{ mt: 2 }}
         >
           Inserir na caderneta
         </Button>

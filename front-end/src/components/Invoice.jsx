@@ -13,33 +13,37 @@ const Invoice = () => {
   );
 
   return (
-    <>
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      mx: 5,
+    }}>
       <h2>Calcular Faturamento</h2>
       <InvoiceForm setInvoice={setInvoice} />
-      <Box sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <List sx={{ width: 'min(720px, 100%)', bgcolor: '#fff5f5' }}>
-          <ListItem>
-            <ListItemText>
-              Pagamentos Recebidos (Líquido): {convertNumberToBRL(invoice.received)}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemText>
-              Pagamentos Atrasados: {convertNumberToBRL(invoice.unreceived)}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemText>
-              Faturamento Total (Bruto): {convertNumberToBRL(invoice.received + invoice.unreceived)}
-            </ListItemText>
-          </ListItem>
-        </List>
-      </Box>
-    </>
+      <List sx={{
+        width: 'min(720px, 100%)',
+        bgcolor: '#fff5f5',
+        borderRadius: '10px',
+        mt: 3,
+      }}>
+        <ListItem>
+          <ListItemText>
+            Pagamentos Recebidos (Líquido): {convertNumberToBRL(invoice.received)}
+          </ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemText>
+            Pagamentos Atrasados: {convertNumberToBRL(invoice.unreceived)}
+          </ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemText>
+            Faturamento Total (Bruto): {convertNumberToBRL(invoice.received + invoice.unreceived)}
+          </ListItemText>
+        </ListItem>
+      </List>
+    </Box>
   );
 };
 

@@ -1,13 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 
-const UserProvider = () => {
+const UserProvider = ({ children }) => {
   const { REACT_APP_SERVER } = process.env;
-  const [cookies, setCookie] = useCookies(['caderneta-token']);
+  const [cookies, setCookie, removeCookie] = useCookies(['caderneta-token']);
   const [user, setUser] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,6 +62,8 @@ const UserProvider = () => {
     return response;
   };
 
+  const logout = () => removeCookie('caderneta-token');
+
   const register = async (user, password) => {
     const response = await axios.post(
       `${REACT_APP_SERVER}/user/register`,
@@ -77,14 +80,19 @@ const UserProvider = () => {
   const value = {
     user,
     login,
+    logout,
     register,
   };
 
   return (
     <UserContext.Provider value={value}>
-      <Outlet />
+      { children }
     </UserContext.Provider>
   );
+};
+
+UserProvider.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element),
 };
 
 export default UserProvider;
