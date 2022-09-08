@@ -23,17 +23,19 @@ const ProcedureProvider = ({ children }) => {
 
   const addProcedure = async (data) => {
     const paymentDates = calculatePaymentDates(data.installments);
-
     const payload = { ...data, paymentDates };
-    const updatedProcedures = [...procedures, {...payload, paid: 0}];
-
+    
     const response = await axios.post(
       `${REACT_APP_SERVER}/procedure`,
       payload,
       { headers: { 'Authorization': cookies['caderneta-token'] } },
-    ).catch(({ response }) => response.data);
+      ).catch(({ response }) => response.data);
+      
+    if (!response.error) {
+      const updatedProcedures = [...procedures, {...payload, _id: response.data._id, paid: 0}];
 
-    if (!response.error) setProcedures(updatedProcedures);
+      setProcedures(updatedProcedures);
+    }
     return response;
   };
 

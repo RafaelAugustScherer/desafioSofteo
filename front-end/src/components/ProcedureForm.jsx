@@ -8,7 +8,7 @@ const ProcedureForm = () => {
     client: '',
     procedure: '',
     total: '',
-    entry: '',
+    entry: 0,
     installments: '1',
   };
   const [ formData, setFormData ] = useState(INITIAL_DATA);
