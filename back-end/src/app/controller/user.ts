@@ -10,7 +10,6 @@ const create: RequestHandler = async (req ,res) => {
 const login: RequestHandler = async (req, res) => {
   const { _id, user } = await UserService.login(req.body);
   const token = AuthUtilities.generateToken(_id, user);
-
   return res.status(200).json({ token });
 };
 
