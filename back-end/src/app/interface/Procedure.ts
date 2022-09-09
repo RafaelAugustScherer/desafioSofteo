@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 interface Procedure {
-  id?: Types.ObjectId,
+  id?: Types.ObjectId | string,
   userId: string,
   client: string,
   procedure: string,
