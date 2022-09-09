@@ -17,7 +17,7 @@ const read: RequestHandler = async (req, res) => {
 };
 
 const update: RequestHandler = async (req, res) => {
-  const payload = req.body as Procedure;
+  const payload = req.body as Partial<Procedure>;
   const response = await ProcedureService.update(payload);
   return res.status(200).json(response);
 };

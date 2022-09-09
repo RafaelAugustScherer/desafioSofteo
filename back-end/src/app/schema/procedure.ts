@@ -14,8 +14,6 @@ const create = JoiExtended.object({
 
 const update = JoiExtended.object({
   id: JoiExtended.string().hex().length(24).required(),
-  client: JoiExtended.string().min(2),
-  procedure: JoiExtended.string().min(2),
   paid: JoiExtended.number().integer().positive().max(36),
 });
 

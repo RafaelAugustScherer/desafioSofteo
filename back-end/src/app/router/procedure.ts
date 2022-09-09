@@ -3,11 +3,11 @@ import ProcedureMiddleware from '../middleware/procedure';
 import AuthMiddleware from '../middleware/auth';
 import ProcedureController from '../controller/procedure';
 
-const userRouter = Router();
+const procedureRouter = Router();
 
-userRouter.use(AuthMiddleware.validateToken);
+procedureRouter.use(AuthMiddleware.validateToken);
 
-userRouter.route('/')
+procedureRouter.route('/')
   .get(
     ProcedureController.read,
   )
@@ -24,4 +24,4 @@ userRouter.route('/')
     ProcedureController.remove,
   );
 
-export default userRouter;
+export default procedureRouter;
