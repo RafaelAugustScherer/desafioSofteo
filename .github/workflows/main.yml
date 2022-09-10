@@ -28,7 +28,7 @@ jobs:
     defaults:
       run:
         working-directory: ./back-end
-    needs: test
+    needs: test_back
     steps:
       - uses: actions/checkout@v3
       - name: Build and Deploy API
