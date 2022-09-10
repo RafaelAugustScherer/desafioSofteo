@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Change directory to back-end
         run: cd back-end
       - name: Setup node
         uses: actions/setup-node@v3
