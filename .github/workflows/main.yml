@@ -4,7 +4,7 @@ on:
       - master
 
 jobs:
-  Test Back-end:
+  test_back:
     runs-on: ubuntu-latest
     defaults:
       run:
