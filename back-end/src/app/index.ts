@@ -1,7 +1,7 @@
 import App from './app';
 import 'dotenv';
 
-const PORT = process.env.APP_PORT || 3001;
+const PORT = process.env.PORT || process.env.APP_PORT || 3001;
 
 App.listen(
   +PORT,
