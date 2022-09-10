@@ -6,11 +6,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back-end
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Change directory to back-end
-        run: cd back-end
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -21,8 +22,12 @@ jobs:
         run: npm run test
     env:
       JWT_SECRET: ${{secrets.JWT_SECRET}}
+  
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back-end
     needs: test
     steps:
       - uses: actions/checkout@v3
