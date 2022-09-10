@@ -23,7 +23,7 @@ jobs:
     env:
       JWT_SECRET: ${{secrets.JWT_SECRET}}
   
-  Deploy Back-end:
+  deploy_back:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -44,12 +44,12 @@ jobs:
       HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
       HD_DB_CONNECTION_URI: ${{secrets.DB_CONNECTION_URI}}
 
-  Deploy Front-end:
+  deploy_front:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./front-end
-    needs: Deploy Back-end
+    needs: deploy_back
     steps:
       - uses: actions/checkout@v3
       - name: Build and Deploy Web App
