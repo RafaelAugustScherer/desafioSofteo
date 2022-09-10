@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npx -y tsc",
     "start": "node .",
-    "dev": "ts-node-dev src/app --watch src/app",
+    "dev": "NODE_ENV=development ts-node-dev src/app --watch src/app",
     "pretest": "npm run compose:reset",
     "test": "NODE_ENV=development mocha -r ts-node/register src/test/**/*.test.ts --exit",
     "compose:up": "(docker-compose up -d --build)",
