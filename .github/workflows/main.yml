@@ -4,7 +4,7 @@ on:
       - master
 
 jobs:
-  test:
+  Test Back-end:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,7 +23,7 @@ jobs:
     env:
       JWT_SECRET: ${{secrets.JWT_SECRET}}
   
-  deploy:
+  Deploy Back-end:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -43,3 +43,25 @@ jobs:
     env:
       HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
       HD_DB_CONNECTION_URI: ${{secrets.DB_CONNECTION_URI}}
+
+  Deploy Front-end:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./front-end
+    needs: Deploy Back-end
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Deploy Web App
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "caderneta-online-front"
+          heroku_email: "rafaelaugustscherer@gmail.com"
+          usedocker: true
+          stack: container
+          appdir: "front-end"
+          docker_build_args: |
+            REACT_APP_SERVER
+    env:
+      REACT_APP_SERVER: ${{secrets.REACT_APP_SERVER}}
