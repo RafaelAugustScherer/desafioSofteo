@@ -1,0 +1,22 @@
+{
+  "name": "desafiosofteo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "install:front": "cd front-end && npm install",
+    "install:back": "cd back-end && npm install",
+    "install:apps": "npm run install:front && npm run install:back",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RafaelAugustScherer/desafioSofteo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RafaelAugustScherer/desafioSofteo/issues"
+  },
+  "homepage": "https://github.com/RafaelAugustScherer/desafioSofteo#readme"
+}
