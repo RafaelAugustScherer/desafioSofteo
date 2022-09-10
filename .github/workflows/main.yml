@@ -32,6 +32,7 @@ jobs:
           heroku_email: "rafaelaugustscherer@gmail.com"
           usedocker: true
           stack: container
+          appdir: "back-end"
     env:
       HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
       HD_DB_CONNECTION_URI: ${{secrets.DB_CONNECTION_URI}}
