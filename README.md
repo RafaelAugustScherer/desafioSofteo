@@ -1,6 +1,6 @@
 # 📒 Caderneta Online (desafioSofteo) 📒
 
-A Caderneta Online se trata de uma plataforma web para o registro de procedimentos parcelados, acompanhamento da situação de pagamento destes e relatórios de faturamento!
+A Caderneta Online se trata de uma plataforma web para o registro de procedimentos parcelados ou à vista, acompanhamento da situação de pagamento destes e relatórios de faturamento!
 
 > A plataforma foi criada a partir de um desafio técnico proposto em um processo seletivo.
 
