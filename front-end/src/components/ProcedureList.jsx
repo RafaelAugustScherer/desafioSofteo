@@ -19,7 +19,9 @@ const ProcedureList = () => {
   );
 
   const calculateInstallment = (total, entry, installments) => (
-    ((total - entry) / installments).toFixed(2).split('.').join(',')
+    installments === 0
+      ? 0
+      : ((total - entry) / installments).toFixed(2).split('.').join(',')
   );
 
   const columnFieldGenerate = (field, headerName, minWidth, otherProps) => (
@@ -48,7 +50,11 @@ const ProcedureList = () => {
     columnFieldGenerate('paidInstallments', 'Parcelas Pagas', 140,
       {
         valueGetter: ({ row }) => row,
-        valueFormatter: ({ value: p }) => `${p.paid}/${p.installments}`,
+        valueFormatter: ({ value: p }) => (
+          p.installments === 0
+            ? 'À vista'
+            : `${p.paid}/${p.installments}`
+        ),
       },
     ),
     columnFieldGenerate('nextInstallmentDate', 'Próxima Parcela', 130, 
@@ -111,7 +117,7 @@ const ProcedureList = () => {
           getRowClassName={({ row: p }) => {
             const nextPaymentDate = moment(getFormattedDate(p.paymentDates, p.paid), 'DD/MM/YYYY');
             const currentDate = moment();
-            if (p.paid >= p.paymentDates.length) {
+            if (p.paid >= p.paymentDates.length || p.installments === 0) {
               return 'paidInstallmentRow';
             }
             if (currentDate > nextPaymentDate) {

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useCookies } from 'react-cookie';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
+import 'moment/locale/pt-br';
 import { calculatePaymentDates } from '../utilities/date';
 
 export const ProcedureContext = createContext();
@@ -22,7 +24,9 @@ const ProcedureProvider = ({ children }) => {
   };
 
   const addProcedure = async (data) => {
-    const paymentDates = calculatePaymentDates(data.installments);
+    const paymentDates = data.installments === 0
+      ? [moment().format('L')]
+      : calculatePaymentDates(data.installments);
     const payload = { ...data, paymentDates };
     
     const response = await axios.post(

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Box, Button, FormControl, InputAdornment, InputLabel, TextField, MenuItem, FilledInput } from '@mui/material';
 import { ProcedureContext } from '../provider/Procedure';
 import ErrorAlert from '../partials/ErrorAlert';
@@ -37,6 +37,12 @@ const ProcedureForm = () => {
     if (response.error) setFormError(response.error);
     setFormData(INITIAL_DATA);
   };
+
+  useEffect(() => {
+    if (formData.installments === '0' && formData.entry !== '0') {
+      setFormData({ ...formData, entry: '0' });
+    }
+  }, [formData]);
 
   return (
     <>
@@ -104,6 +110,7 @@ const ProcedureForm = () => {
                 R$
               </InputAdornment>
             }
+            disabled={formData.installments === '0'}
             required
           />
         </FormControl>
@@ -116,6 +123,9 @@ const ProcedureForm = () => {
           variant="filled"
           onChange={handleInput}
         >
+          <MenuItem key="payment-option-0" value="0">
+            À vista
+          </MenuItem>
           {[ ...Array(36).keys() ].map((key) => {
             const value = key + 1;
             return (<MenuItem

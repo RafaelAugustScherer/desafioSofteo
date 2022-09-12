@@ -13,7 +13,9 @@ const InvoiceForm = ({ setInvoice }) => {
   const { procedures } = useContext(ProcedureContext);
   
   const calculateInstallment = (total, entry, installments) => (
-    ((total - entry) / installments)
+    installments === 0
+      ? total
+      : (total - entry) / installments
   );
 
   const isDateWithinPeriod = (date) => (
@@ -30,7 +32,7 @@ const InvoiceForm = ({ setInvoice }) => {
       const date = moment(dateString, 'DD/MM/YYYY');
 
       if (isDateWithinPeriod(date)) {
-        if (dateIndex < paid) paidTotal += +installmentValue;
+        if (dateIndex < paid || installments === 0) paidTotal += +installmentValue;
         else if (date < moment()) unpaidTotal += +installmentValue;
         else if (futurePayments) paidTotal += +installmentValue;
       }

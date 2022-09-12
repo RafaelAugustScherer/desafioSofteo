@@ -10,7 +10,10 @@ const ProcedureListFilters = ({ arrayToFilter, setResultArray }) => {
   const applyFilters = () => {
     const filteredByPaidProcedures = includePaidProcedures
       ? arrayToFilter
-      : arrayToFilter.filter(({ paymentDates, paid }) => paid < paymentDates.length);
+      : arrayToFilter.filter(({ paymentDates, paid, installments  }) => {
+        if (installments === 0) return false;
+        return paid < paymentDates.length;
+      });
 
     const filteredByClientName = filteredByPaidProcedures
       .filter(({ client }) => client.toLowerCase().includes(clientFilter.toLowerCase()));

@@ -8,7 +8,7 @@ const create = JoiExtended.object({
   procedure: JoiExtended.string().min(2).required(),
   total: JoiExtended.number().positive().required(),
   entry: JoiExtended.number().positive().allow(0).required(),
-  installments: JoiExtended.number().integer().max(36).positive().required(),
+  installments: JoiExtended.number().integer().max(36).positive().allow(0).required(),
   paymentDates: JoiExtended.array().items(JoiExtended.date().format('DD/MM/YYYY')).required(),
 });
 
