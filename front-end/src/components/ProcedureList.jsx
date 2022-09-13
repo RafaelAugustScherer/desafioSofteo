@@ -8,6 +8,7 @@ import ErrorAlert from '../partials/ErrorAlert';
 import PayInstallmentButton from '../partials/PayInstallmentButton';
 import DeleteProcedureButton from '../partials/DeleteProcedureButton';
 import ProcedureListFilters from '../partials/ProcedureListFilters';
+import ProcedureListFooter from '../partials/ProcedureListFooter';
 
 const ProcedureList = () => {
   const { procedures } = useContext(ProcedureContext);
@@ -128,6 +129,9 @@ const ProcedureList = () => {
             field: 'nextInstallmentDate',
             sort: 'asc',
           }] } }}
+          components={{
+            Footer: ProcedureListFooter,
+          }}
         />
       </Box>
     </>
